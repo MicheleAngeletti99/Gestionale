@@ -2,6 +2,8 @@ package com.example.Gestionale.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "magazzino")
 public class Magazzino {
@@ -9,6 +11,9 @@ public class Magazzino {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @OneToMany(mappedBy = "magazzino")
+    private List<Oggetto> oggetto;
 
     private String nomeAttivita;
     private String email;
@@ -19,17 +24,26 @@ public class Magazzino {
     public Magazzino() {
     }
 
-    public Magazzino(Long id, String nomeAttivita, String email, String password, String indirizzo, String tipologia) {
+    public Magazzino(Long id, String nomeAttivita, String email, String password, String indirizzo, String tipologia, List<Oggetto> oggetto) {
         this.id = id;
         this.nomeAttivita = nomeAttivita;
         this.email = email;
         this.password = password;
         this.indirizzo = indirizzo;
         this.tipologiaAttivita = tipologia;
+        this.oggetto = oggetto;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public List<Oggetto> getOggetto() {
+        return oggetto;
+    }
+
+    public void setOggetto(List<Oggetto> oggetto) {
+        this.oggetto = oggetto;
     }
 
     public String getNomeAttivita() {

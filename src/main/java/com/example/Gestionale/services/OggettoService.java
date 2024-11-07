@@ -1,7 +1,6 @@
 package com.example.Gestionale.services;
 
 import com.example.Gestionale.entities.Oggetto;
-import com.example.Gestionale.repositories.OggettoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
