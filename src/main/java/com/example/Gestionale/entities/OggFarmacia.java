@@ -1,6 +1,8 @@
 package com.example.Gestionale.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
@@ -12,16 +14,21 @@ public class OggFarmacia extends Oggetto{
     private boolean conRicetta;
     private LocalDate scadenza;
     private String codiceIdentificativo;
+    @ManyToOne
+    @JoinColumn(name = "id_magazzino")
+    private Magazzino magazzino;
 
     // no args constructor
     public OggFarmacia() {
     }
     // all args constructor
-    public OggFarmacia(Long id, String nome, boolean conRicetta, LocalDate scadenza, String codiceIdentificativo) {
-        super(id, nome);
+    public OggFarmacia(Long id, String nome, Double prezzo, Integer quantita, String descrizione,
+                       boolean conRicetta, LocalDate scadenza, String codiceIdentificativo, Magazzino magazzino) {
+        super(id, nome, prezzo, quantita, descrizione);
         this.conRicetta = conRicetta;
         this.scadenza = scadenza;
         this.codiceIdentificativo = codiceIdentificativo;
+        this.magazzino = magazzino;
     }
 
     // getters & setters
@@ -48,6 +55,14 @@ public class OggFarmacia extends Oggetto{
 
     public void setCodiceIdentificativo(String codiceIdentificativo) {
         this.codiceIdentificativo = codiceIdentificativo;
+    }
+
+    public Magazzino getMagazzino() {
+        return magazzino;
+    }
+
+    public void setMagazzino(Magazzino magazzino) {
+        this.magazzino = magazzino;
     }
 
     /**

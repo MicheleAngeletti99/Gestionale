@@ -13,7 +13,11 @@ public class Magazzino {
     private Long id;
 
     @OneToMany(mappedBy = "magazzino")
-    private List<Oggetto> oggetto;
+    private List<OggAbbigliamento> oggettiAbbigliamento;
+    @OneToMany(mappedBy = "magazzino")
+    private List<OggFarmacia> oggettiFarmacia;
+    @OneToMany(mappedBy = "magazzino")
+    private List<OggPub> oggettiPub;
 
     private String nomeAttivita;
     private String email;
@@ -24,26 +28,45 @@ public class Magazzino {
     public Magazzino() {
     }
 
-    public Magazzino(Long id, String nomeAttivita, String email, String password, String indirizzo, String tipologia, List<Oggetto> oggetto) {
+    public Magazzino(Long id, String nomeAttivita, String email, String password, String indirizzo, String tipologia,
+                     List<OggAbbigliamento> oggettiAbbigliamento, List<OggFarmacia> oggettiFarmacia, List<OggPub> oggettiPub) {
         this.id = id;
         this.nomeAttivita = nomeAttivita;
         this.email = email;
         this.password = password;
         this.indirizzo = indirizzo;
         this.tipologiaAttivita = tipologia;
-        this.oggetto = oggetto;
+        this.oggettiAbbigliamento = oggettiAbbigliamento;
+        this.oggettiFarmacia = oggettiFarmacia;
+        this.oggettiPub = oggettiPub;
     }
 
     public Long getId() {
         return id;
     }
 
-    public List<Oggetto> getOggetto() {
-        return oggetto;
+    public List<OggAbbigliamento> getOggettiAbbigliamento() {
+        return oggettiAbbigliamento;
     }
 
-    public void setOggetto(List<Oggetto> oggetto) {
-        this.oggetto = oggetto;
+    public void setOggettiAbbigliamento(List<OggAbbigliamento> oggettiAbbigliamento) {
+        this.oggettiAbbigliamento = oggettiAbbigliamento;
+    }
+
+    public List<OggFarmacia> getOggettiFarmacia() {
+        return oggettiFarmacia;
+    }
+
+    public void setOggettiFarmacia(List<OggFarmacia> oggettiFarmacia) {
+        this.oggettiFarmacia = oggettiFarmacia;
+    }
+
+    public List<OggPub> getOggettiPub() {
+        return oggettiPub;
+    }
+
+    public void setOggettiPub(List<OggPub> oggettiPub) {
+        this.oggettiPub = oggettiPub;
     }
 
     public String getNomeAttivita() {
@@ -78,11 +101,20 @@ public class Magazzino {
         this.indirizzo = indirizzo;
     }
 
-    public String getTipologia() {
+    public String getTipologiaAttivita() {
         return tipologiaAttivita;
     }
 
-    public void setTipologia(String tipologia) {
+    public void setTipologiaAttivita(String tipologia) {
         this.tipologiaAttivita = tipologia;
+    }
+
+    // Copy the fields of another object given as an argument.
+    public void copyFields(Magazzino magazzino) {
+        this.nomeAttivita = magazzino.getNomeAttivita();
+        this.email = magazzino.getEmail();
+        this.password = magazzino.getPassword();
+        this.indirizzo = magazzino.getIndirizzo();
+        this.tipologiaAttivita = magazzino.getTipologiaAttivita();
     }
 }

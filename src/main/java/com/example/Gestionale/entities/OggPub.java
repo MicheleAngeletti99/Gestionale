@@ -1,6 +1,8 @@
 package com.example.Gestionale.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
@@ -11,15 +13,20 @@ public class OggPub extends Oggetto{
     // fields
     private LocalDate scadenza;
     private String tipologia;
+    @ManyToOne
+    @JoinColumn(name = "id_magazzino")
+    private Magazzino magazzino;
 
     // no args constructor
     public OggPub() {
     }
     // all args constructor
-    public OggPub(Long id, String nome, LocalDate scadenza, String tipologia) {
-        super(id, nome);
+    public OggPub(Long id, String nome, Double prezzo, Integer quantita, String descrizione, LocalDate scadenza,
+                  String tipologia, Magazzino magazzino) {
+        super(id, nome, prezzo, quantita, descrizione);
         this.scadenza = scadenza;
         this.tipologia = tipologia;
+        this.magazzino = magazzino;
     }
 
     // getters & setters
@@ -38,6 +45,14 @@ public class OggPub extends Oggetto{
 
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
+    }
+
+    public Magazzino getMagazzino() {
+        return magazzino;
+    }
+
+    public void setMagazzino(Magazzino magazzino) {
+        this.magazzino = magazzino;
     }
 
     /**
