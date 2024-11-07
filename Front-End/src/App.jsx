@@ -1,20 +1,20 @@
-import { BrowserRouter } from "react-router-dom";
-import "./App.css";
+import { Route, Routes } from "react-router-dom";
+
+import { Home } from "./pages/Home";
+import { Container } from "./Container";
 import { Navbar } from "./components/Navbar";
-import { Slide } from "./components/Slide";
-import Slide2 from "./assets/Slide1.jpg";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Slide
-        imageSrc={Slide2}
-        imageAlt="image slide"
-        title="Wharehouse Manager"
-        description="teststststtstatsta"
-      />
-    </BrowserRouter>
+    <Container
+      navbar={<Navbar />}
+      // footer={<Footer />}
+    >
+      <Routes>
+        {/* Home */}
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Container>
   );
 }
 
