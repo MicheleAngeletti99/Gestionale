@@ -29,4 +29,9 @@ public class Oggetto {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    // copia i campi di un altro oggetto dato in argomento
+    public void copyFields(Oggetto oggetto) {
+        this.nome = oggetto.getNome();
+    }
 }
