@@ -49,11 +49,7 @@ public class MagazzinoService {
         Optional<Magazzino> magazzinoOptional = magazzinoRepository.findById(id);
         if (magazzinoOptional.isPresent()){
             Magazzino magazzinoTrovato = magazzinoOptional.get();
-            magazzinoTrovato.setNomeAttivita(magazzino.getNomeAttivita());
-            magazzinoTrovato.setPassword(magazzinoTrovato.getPassword());
-            magazzinoTrovato.setTipologia(magazzinoTrovato.getTipologia());
-            magazzinoTrovato.setIndirizzo(magazzinoTrovato.getIndirizzo());
-            magazzinoTrovato.setEmail(magazzinoTrovato.getEmail());
+            magazzinoTrovato.copyFields(magazzino);
 
             return Optional.of(magazzinoRepository.save(magazzinoTrovato));
         }
