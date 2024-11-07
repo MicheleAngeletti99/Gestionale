@@ -2,3 +2,4 @@
 2) Eseguire il comando:  npm install
 3) Per fare una prova eseguire il comando: npm run dev , una volta partito cliccare
    sull'indirizzo del local con il tasto sinistro
+4)Eseguire il comando:  npm install react-router-dom
