@@ -1,6 +1,8 @@
 package com.example.Gestionale.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -10,16 +12,21 @@ public class OggAbbigliamento extends Oggetto{
     private String marca;
     private String taglia;
     private String tipologia;
+    @ManyToOne
+    @JoinColumn(name = "id_magazzino")
+    private Magazzino magazzino;
 
     // no args constructor
     public OggAbbigliamento() {
     }
     // all args constructor
-    public OggAbbigliamento(Long id, String nome, String marca, String taglia, String tipologia) {
-        super(id, nome);
+    public OggAbbigliamento(Long id, String nome, Double prezzo, Integer quantita, String descrizione,
+                            String marca, String taglia, String tipologia, Magazzino magazzino) {
+        super(id, nome, prezzo, quantita, descrizione);
         this.marca = marca;
         this.taglia = taglia;
         this.tipologia = tipologia;
+        this.magazzino = magazzino;
     }
 
     // getters & setters
@@ -46,6 +53,14 @@ public class OggAbbigliamento extends Oggetto{
 
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
+    }
+
+    public Magazzino getMagazzino() {
+        return magazzino;
+    }
+
+    public void setMagazzino(Magazzino magazzino) {
+        this.magazzino = magazzino;
     }
 
     /**
