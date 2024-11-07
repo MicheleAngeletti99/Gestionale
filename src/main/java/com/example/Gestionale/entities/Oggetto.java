@@ -21,7 +21,7 @@ public class Oggetto {
     public Oggetto() {
     }
 
-    public Oggetto(Long id, String nome, Magazzino magazzino, Double prezzo, Integer quantita, String descrizione) {
+    public Oggetto(Long id, String nome, Magazzino magazzino , Double prezzo, Integer quantita, String descrizione) {
         this.id = id;
         this.nome = nome;
         this.magazzino = magazzino;
