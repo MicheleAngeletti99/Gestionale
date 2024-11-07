@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { Slide } from "./components/Slide";
-import Slide2 from "./assets/Slide2.jpg";
+import Slide2 from "./assets/Slide1.jpg";
 
 function App() {
   return (

@@ -3,6 +3,7 @@ export function Button({
   onClick,
   style = "primary",
   size = "sm",
+  fontSize = "primary",
 }) {
   const buttonStyle = {
     primary: "m-1 bg-blue-500 text-white rounded-md hover:bg-blue-700",
@@ -19,9 +20,15 @@ export function Button({
     xlg: "px-4 py-2",
   };
 
+  const buttonFont = {
+    primary: "text-base",
+    secondary: "text-lg",
+    thirdy: "text-3xl",
+  };
+
   return (
     <button
-      className={`${buttonStyle[style]} ${buttonSize[size]}`}
+      className={`${buttonStyle[style]} ${buttonSize[size]} ${buttonFont[fontSize]}`}
       onClick={onClick}
     >
       {text}
