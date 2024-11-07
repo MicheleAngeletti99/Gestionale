@@ -1,10 +1,14 @@
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-
+import { Navbar } from "./components/Navbar";
+import { Slide } from "./components/Slide";
+import Slide2 from "./assets/Slide2.jpg";
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Slide imageSrc={Slide2} imageAlt="image slide" title="Wharehouse Manager" description="teststststtstatsta" />
+    </BrowserRouter>
   );
 }
 
