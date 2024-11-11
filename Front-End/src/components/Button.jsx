@@ -1,10 +1,4 @@
-export function Button({
-  text = "Button",
-  onClick,
-  style = "primary",
-  size = "sm",
-  fontSize = "primary",
-}) {
+export function Button({ text = "Button", onClick, style = "primary", size = "sm", fontSize = "primary" }) {
   const buttonStyle = {
     primary: "m-1 bg-blue-500 text-white rounded-md hover:bg-blue-700",
     secondary: "m-1 bg-gray-500 text-white rounded-md hover:bg-gray-700",
@@ -27,10 +21,7 @@ export function Button({
   };
 
   return (
-    <button
-      className={`${buttonStyle[style]} ${buttonSize[size]} ${buttonFont[fontSize]}`}
-      onClick={onClick}
-    >
+    <button className={`${buttonStyle[style]} ${buttonSize[size]} ${buttonFont[fontSize]}`} onClick={onClick}>
       {text}
     </button>
   );
