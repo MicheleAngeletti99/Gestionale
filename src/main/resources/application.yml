@@ -1,11 +1,11 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/devdb
-    username: root
-    password: MikyRoot2024
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://127.0.0.1:5142/Gestionale
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
   jpa:
-    database: mysql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show_sql: true
     hibernate:
       ddl-auto: update
