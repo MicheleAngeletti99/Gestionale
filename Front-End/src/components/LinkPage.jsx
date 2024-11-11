@@ -1,6 +1,11 @@
-export function LinkPage({ onClick, text }) {
+export function LinkPage({ onClick, text, onMouseEnter, onMouseLeave }) {
   return (
-    <div onClick={onClick} className="text-3xl cursor-pointer">
+    <div
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className="text-3xl cursor-pointer"
+    >
       {text}
     </div>
   );

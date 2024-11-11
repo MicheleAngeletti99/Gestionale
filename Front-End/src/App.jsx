@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Container } from "./Container";
 import { Navbar } from "./components/Navbar";
+import { GestionaleHome } from "./pages/GestionaleHome";
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
       <Routes>
         {/* Home */}
         <Route path="/" element={<Home />} />
+
+        {/* Gestionale Magazzino */}
+        <Route path="/gestionale_magazzino" element={<GestionaleHome />} />
       </Routes>
     </Container>
   );
