@@ -1,5 +1,6 @@
 package com.example.Gestionale.controllers;
 
+import com.example.Gestionale.entities.OggAbbigliamento;
 import com.example.Gestionale.entities.OggFarmacia;
 import com.example.Gestionale.services.OggFarmaciaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,11 +32,15 @@ public class OggFarmaciaController {
             @ApiResponse(responseCode = "201", description = "The given item has been added correctly in the database."),
             @ApiResponse(responseCode = "400", description = "The given item is not valid for this request.")
     })
-    @PostMapping("/new")
+    @PostMapping("/new/{idMagazzino}")
     public ResponseEntity<OggFarmacia> create(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "The item that is going to be added in the database.") @RequestBody OggFarmacia oggetto) {
-        OggFarmacia createdOgg = oggFarmaciaService.create(oggetto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdOgg);
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "The item that is going to be added in the database.") @RequestBody OggFarmacia oggetto,
+            @Parameter(name = "idMagazzino", description = "The ID of the Magazzino to be retrieved or manipulated.")@PathVariable Long idMagazzino) {
+        Optional<OggFarmacia> createdOgg = oggFarmaciaService.create(oggetto, idMagazzino);
+        if (createdOgg.isPresent()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdOgg.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "Reads all items in ogg_farmacia.", description = "Reads all the records in ogg_farmacia table in the database.")

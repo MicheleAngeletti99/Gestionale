@@ -1,7 +1,9 @@
 package com.example.Gestionale.services;
 
 import com.example.Gestionale.entities.Magazzino;
+import com.example.Gestionale.entities.Utente;
 import com.example.Gestionale.repositories.MagazzinoRepository;
+import com.example.Gestionale.repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,6 +14,9 @@ public class MagazzinoService {
 
     @Autowired
     private MagazzinoRepository magazzinoRepository;
+
+    @Autowired
+    private UtenteRepository utenteRepository;
 
     /**
      * Retrieves a list of all Magazzino entries from the repository.
@@ -33,10 +38,18 @@ public class MagazzinoService {
     /**
      * Creates a new Magazzino entry in the repository.
      * @param magazzino the Magazzino object to save
+     * @param idUtente the ID of Utente to associate with the Magazzino.
      * @return the created Magazzino object
      */
-    public Magazzino create(Magazzino magazzino){
-        return magazzinoRepository.save(magazzino);
+    public Optional<Magazzino> create(Long idUtente, Magazzino magazzino){
+        Optional<Utente> optionalUtente = utenteRepository.findById(idUtente);
+        if (optionalUtente.isPresent()){
+            Utente utente = optionalUtente.get();
+            magazzino.setUtente(utente);
+            Magazzino savedMagazzino = magazzinoRepository.save(magazzino);
+            return Optional.of(savedMagazzino);
+        }
+        return Optional.empty();
     }
 
     /**
