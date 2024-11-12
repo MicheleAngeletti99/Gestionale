@@ -21,18 +21,13 @@ export function Navbar() {
   }
 
   return (
-    <nav className="w-screen h-20 border-b-2 border-solid border-gray-300 p-2 flex flex-row items-center justify-between ">
+    <nav className="w-full h-20 border-b-2 border-solid border-gray-300 p-2 flex flex-row items-center justify-between ">
       <section className="flex flex-row items-center gap-3">
         <ImgLogo src={src} alt="Home Page" onClick={handleHome} />
         <TitleXL text="StockHub" />
       </section>
       <section className="flex flex-row items-center gap-3">
-        <LinkPage
-          onClick={handleGestionaleHome}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-          text="Products"
-        />
+        <LinkPage onClick={handleGestionaleHome} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} text="Products" />
         {hover && (
           <ul className="absolute top-20 bg-white z-10 w-32 p-2 flex flex-col">
             <li>Warehouse</li>
@@ -43,16 +38,8 @@ export function Navbar() {
         <LinkPage onClick={handleGetStarted} text="Solutions" />
         <LinkPage onClick={handleGetStarted} text="Resources" />
         <LinkPage onClick={handleGetStarted} text="Price" />
-        <Button
-          onClick={handleGetStarted}
-          text="Get Started"
-          fontSize="thirdy"
-        />
-        <Button
-          onClick={handleGetStarted}
-          text="Request a Demo"
-          fontSize="secondary"
-        />
+        <Button onClick={handleGetStarted} text="Get Started" fontSize="thirdy" />
+        <Button onClick={handleGetStarted} text="Request a Demo" fontSize="secondary" />
       </section>
     </nav>
   );
