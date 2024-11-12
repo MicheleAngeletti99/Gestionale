@@ -1,6 +1,9 @@
 package com.example.Gestionale.services;
 
+import com.example.Gestionale.entities.Magazzino;
+import com.example.Gestionale.entities.OggFarmacia;
 import com.example.Gestionale.entities.OggPub;
+import com.example.Gestionale.repositories.MagazzinoRepository;
 import com.example.Gestionale.repositories.OggPubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,17 +16,27 @@ public class OggPubService {
     // fields
     @Autowired
     private OggPubRepository oggPubRepository;
+    @Autowired
+    private MagazzinoRepository magazzinoRepository;
 
     // crud methods
 
     /**
-     * Creates a new record in ogg_pub table.
+     * Creates a new record in ogg_farmacia table.
      *
      * @param oggetto the item to be saved, must not be null.
+     * @param idMagazzino ID of the Magazzino to associate with the OggettoPub.
      * @return the saved item, will not be null.
      */
-    public OggPub create(OggPub oggetto) {
-        return oggPubRepository.save(oggetto);
+    public Optional<OggPub> create(OggPub oggetto, Long idMagazzino) {
+        Optional<Magazzino> optionalMagazzino = magazzinoRepository.findById(idMagazzino);
+        if (optionalMagazzino.isPresent()) {
+            Magazzino magazzino = optionalMagazzino.get();
+            oggetto.setMagazzino(magazzino);
+            OggPub savedOggPub = oggPubRepository.save(oggetto);
+            return Optional.of(savedOggPub);
+        }
+        return Optional.empty();
     }
 
     /**

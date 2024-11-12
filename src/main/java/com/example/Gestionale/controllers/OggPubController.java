@@ -32,11 +32,15 @@ public class OggPubController {
             @ApiResponse(responseCode = "201", description = "The given item has been added correctly in the database."),
             @ApiResponse(responseCode = "400", description = "The given item is not valid for this request.")
     })
-    @PostMapping("/new")
+    @PostMapping("/new/{idMagazzino}")
     public ResponseEntity<OggPub> create(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "The item that is going to be added in the database.") @RequestBody OggPub oggetto) {
-        OggPub createdOgg = oggPubService.create(oggetto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdOgg);
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "The item that is going to be added in the database.") @RequestBody OggPub oggetto,
+            @Parameter(name = "idMagazzino", description = "The ID of the Magazzino to be retrieved or manipulated.")@PathVariable Long idMagazzino) {
+        Optional<OggPub> createdOgg = oggPubService.create(oggetto, idMagazzino);
+        if (createdOgg.isPresent()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdOgg.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "Reads all items in ogg_pub.", description = "Reads all the records in ogg_pub table in the database.")

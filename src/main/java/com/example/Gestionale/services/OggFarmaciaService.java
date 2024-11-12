@@ -1,6 +1,9 @@
 package com.example.Gestionale.services;
 
+import com.example.Gestionale.entities.Magazzino;
+import com.example.Gestionale.entities.OggAbbigliamento;
 import com.example.Gestionale.entities.OggFarmacia;
+import com.example.Gestionale.repositories.MagazzinoRepository;
 import com.example.Gestionale.repositories.OggFarmaciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ public class OggFarmaciaService {
     // fields
     @Autowired
     private OggFarmaciaRepository oggFarmaciaRepository;
+    @Autowired
+    private MagazzinoRepository magazzinoRepository;
 
     // crud methods
 
@@ -20,10 +25,18 @@ public class OggFarmaciaService {
      * Creates a new record in ogg_farmacia table.
      *
      * @param oggetto the item to be saved, must not be null.
+     * @param idMagazzino ID of the Magazzino to associate with the OggettoFarmacia.
      * @return the saved item, will not be null.
      */
-    public OggFarmacia create(OggFarmacia oggetto) {
-        return oggFarmaciaRepository.save(oggetto);
+    public Optional<OggFarmacia> create(OggFarmacia oggetto, Long idMagazzino) {
+        Optional<Magazzino> optionalMagazzino = magazzinoRepository.findById(idMagazzino);
+        if (optionalMagazzino.isPresent()) {
+            Magazzino magazzino = optionalMagazzino.get();
+            oggetto.setMagazzino(magazzino);
+            OggFarmacia savedOggFarmacia = oggFarmaciaRepository.save(oggetto);
+            return Optional.of(savedOggFarmacia);
+        }
+        return Optional.empty();
     }
 
     /**

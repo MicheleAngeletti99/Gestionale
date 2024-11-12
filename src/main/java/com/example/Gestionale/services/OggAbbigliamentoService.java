@@ -1,6 +1,9 @@
 package com.example.Gestionale.services;
 
+import com.example.Gestionale.entities.Magazzino;
 import com.example.Gestionale.entities.OggAbbigliamento;
+import com.example.Gestionale.entities.Utente;
+import com.example.Gestionale.repositories.MagazzinoRepository;
 import com.example.Gestionale.repositories.OggAbbigliamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ public class OggAbbigliamentoService {
     // fields
     @Autowired
     private OggAbbigliamentoRepository oggAbbigliamentoRepository;
+    @Autowired
+    private MagazzinoRepository magazzinoRepository;
 
     // crud methods
 
@@ -20,10 +25,18 @@ public class OggAbbigliamentoService {
      * Creates a new record in ogg_abbigliamento table.
      *
      * @param oggetto the item to be saved, must not be null.
+     * @param idMagazzino ID of the Magazzino to associate with the OggettoAbbigliamento.
      * @return the saved item, will not be null.
      */
-    public OggAbbigliamento create(OggAbbigliamento oggetto) {
-        return oggAbbigliamentoRepository.save(oggetto);
+    public Optional<OggAbbigliamento> create(OggAbbigliamento oggetto, Long idMagazzino) {
+            Optional<Magazzino> optionalMagazzino = magazzinoRepository.findById(idMagazzino);
+            if (optionalMagazzino.isPresent()) {
+                Magazzino magazzino = optionalMagazzino.get();
+                oggetto.setMagazzino(magazzino);
+                OggAbbigliamento savedOggAbbigliamento = oggAbbigliamentoRepository.save(oggetto);
+                return Optional.of(savedOggAbbigliamento);
+            }
+            return Optional.empty();
     }
 
     /**
