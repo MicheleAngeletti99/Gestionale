@@ -8,8 +8,8 @@ public class Oggetto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    // fields
     private String nome;
-
     private Double prezzo;
     private Integer quantita;
     private String descrizione;

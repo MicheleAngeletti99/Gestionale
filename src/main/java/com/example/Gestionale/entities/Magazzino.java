@@ -5,44 +5,68 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "magazzino")
+@Table(name = "magazzini")
 public class Magazzino {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    // fields
+    private String nomeAttivita;
+    private String indirizzo;
+    private String tipologiaAttivita;
+    // relations
     @OneToMany(mappedBy = "magazzino")
     private List<OggAbbigliamento> oggettiAbbigliamento;
     @OneToMany(mappedBy = "magazzino")
     private List<OggFarmacia> oggettiFarmacia;
     @OneToMany(mappedBy = "magazzino")
     private List<OggPub> oggettiPub;
-
-    private String nomeAttivita;
-    private String email;
-    private String password;
-    private String indirizzo;
-    private String tipologiaAttivita;
+    @ManyToOne
+    @JoinColumn(name = "id_utente")
+    private Utente utente;
 
     public Magazzino() {
     }
 
-    public Magazzino(Long id, String nomeAttivita, String email, String password, String indirizzo, String tipologia,
-                     List<OggAbbigliamento> oggettiAbbigliamento, List<OggFarmacia> oggettiFarmacia, List<OggPub> oggettiPub) {
+    public Magazzino(Long id, String nomeAttivita, String indirizzo, String tipologia,
+                     List<OggAbbigliamento> oggettiAbbigliamento, List<OggFarmacia> oggettiFarmacia, List<OggPub> oggettiPub, Utente utente) {
         this.id = id;
         this.nomeAttivita = nomeAttivita;
-        this.email = email;
-        this.password = password;
         this.indirizzo = indirizzo;
         this.tipologiaAttivita = tipologia;
         this.oggettiAbbigliamento = oggettiAbbigliamento;
         this.oggettiFarmacia = oggettiFarmacia;
         this.oggettiPub = oggettiPub;
+        this.utente = utente;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getNomeAttivita() {
+        return nomeAttivita;
+    }
+
+    public void setNomeAttivita(String nomeAttivita) {
+        this.nomeAttivita = nomeAttivita;
+    }
+
+    public String getIndirizzo() {
+        return indirizzo;
+    }
+
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
+    public String getTipologiaAttivita() {
+        return tipologiaAttivita;
+    }
+
+    public void setTipologiaAttivita(String tipologia) {
+        this.tipologiaAttivita = tipologia;
     }
 
     public List<OggAbbigliamento> getOggettiAbbigliamento() {
@@ -69,51 +93,17 @@ public class Magazzino {
         this.oggettiPub = oggettiPub;
     }
 
-    public String getNomeAttivita() {
-        return nomeAttivita;
+    public Utente getUtente() {
+        return utente;
     }
 
-    public void setNomeAttivita(String nomeAttivita) {
-        this.nomeAttivita = nomeAttivita;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getIndirizzo() {
-        return indirizzo;
-    }
-
-    public void setIndirizzo(String indirizzo) {
-        this.indirizzo = indirizzo;
-    }
-
-    public String getTipologiaAttivita() {
-        return tipologiaAttivita;
-    }
-
-    public void setTipologiaAttivita(String tipologia) {
-        this.tipologiaAttivita = tipologia;
+    public void setUtente(Utente utente) {
+        this.utente = utente;
     }
 
     // Copy the fields of another object given as an argument.
     public void copyFields(Magazzino magazzino) {
         this.nomeAttivita = magazzino.getNomeAttivita();
-        this.email = magazzino.getEmail();
-        this.password = magazzino.getPassword();
         this.indirizzo = magazzino.getIndirizzo();
         this.tipologiaAttivita = magazzino.getTipologiaAttivita();
     }
