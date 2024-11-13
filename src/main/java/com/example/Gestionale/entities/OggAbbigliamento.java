@@ -8,10 +8,11 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "ogg_abbigliamento")
 public class OggAbbigliamento extends Oggetto{
-    // fields
+    // information fields
     private String marca;
     private String taglia;
     private String tipologia;
+    // relation fields
     @ManyToOne
     @JoinColumn(name = "id_magazzino")
     private Magazzino magazzino;
@@ -64,7 +65,7 @@ public class OggAbbigliamento extends Oggetto{
     }
 
     /**
-     * This method copies the fields of another object of the same class, except id.
+     * This method copies the information fields of another object of the same class.
      *
      * @param oggetto the object that contains the fields to be copied.
      */

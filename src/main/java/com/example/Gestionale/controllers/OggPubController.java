@@ -1,6 +1,5 @@
 package com.example.Gestionale.controllers;
 
-import com.example.Gestionale.entities.OggFarmacia;
 import com.example.Gestionale.entities.OggPub;
 import com.example.Gestionale.services.OggPubService;
 import io.swagger.v3.oas.annotations.Operation;

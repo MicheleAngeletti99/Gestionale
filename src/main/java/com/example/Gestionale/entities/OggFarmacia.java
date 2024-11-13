@@ -10,10 +10,11 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "ogg_farmacia")
 public class OggFarmacia extends Oggetto{
-    // fields
+    // information fields
     private boolean conRicetta;
     private LocalDate scadenza;
     private String codiceIdentificativo;
+    // relation fields
     @ManyToOne
     @JoinColumn(name = "id_magazzino")
     private Magazzino magazzino;
@@ -66,7 +67,7 @@ public class OggFarmacia extends Oggetto{
     }
 
     /**
-     * This method copies the fields of another object of the same class, except id.
+     * This method copies the information fields of another object of the same class.
      *
      * @param oggetto the object that contains the fields to be copied.
      */

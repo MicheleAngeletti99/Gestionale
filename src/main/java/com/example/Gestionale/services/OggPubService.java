@@ -1,7 +1,6 @@
 package com.example.Gestionale.services;
 
 import com.example.Gestionale.entities.Magazzino;
-import com.example.Gestionale.entities.OggFarmacia;
 import com.example.Gestionale.entities.OggPub;
 import com.example.Gestionale.repositories.MagazzinoRepository;
 import com.example.Gestionale.repositories.OggPubRepository;
@@ -22,7 +21,7 @@ public class OggPubService {
     // crud methods
 
     /**
-     * Creates a new record in ogg_farmacia table.
+     * Creates a new record in ogg_pub table.
      *
      * @param oggetto the item to be saved, must not be null.
      * @param idMagazzino ID of the Magazzino to associate with the OggettoPub.

@@ -7,14 +7,14 @@ import java.util.List;
 @Entity
 @Table(name = "utenti")
 public class Utente {
-
+    // id
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    // fields
+    // information fields
     private String email;
     private String password;
-    // relations
+    // relation fields
     @OneToMany(mappedBy = "utente")
     private List<Magazzino> magazzini;
 
@@ -60,11 +60,10 @@ public class Utente {
     }
 
     /**
-     * This method copies the fields of another object of the same class, except id.
+     * This method copies the information fields of another object of the same class.
      *
      * @param utente the object that contains the fields to be copied.
      */
-    // forse qui non servono email e password
     public void copyFields(Utente utente) {
         this.email = utente.getEmail();
         this.password = utente.getPassword();

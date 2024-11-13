@@ -7,15 +7,15 @@ import java.util.List;
 @Entity
 @Table(name = "magazzini")
 public class Magazzino {
-
+    // id
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    // fields
+    // information fields
     private String nomeAttivita;
     private String indirizzo;
     private String tipologiaAttivita;
-    // relations
+    // relation fields
     @OneToMany(mappedBy = "magazzino")
     private List<OggAbbigliamento> oggettiAbbigliamento;
     @OneToMany(mappedBy = "magazzino")
@@ -26,9 +26,10 @@ public class Magazzino {
     @JoinColumn(name = "id_utente")
     private Utente utente;
 
+    // no args constructor
     public Magazzino() {
     }
-
+    // all args constructor
     public Magazzino(Long id, String nomeAttivita, String indirizzo, String tipologia,
                      List<OggAbbigliamento> oggettiAbbigliamento, List<OggFarmacia> oggettiFarmacia, List<OggPub> oggettiPub, Utente utente) {
         this.id = id;
@@ -40,6 +41,8 @@ public class Magazzino {
         this.oggettiPub = oggettiPub;
         this.utente = utente;
     }
+
+    // getters & setters
 
     public Long getId() {
         return id;
@@ -101,7 +104,11 @@ public class Magazzino {
         this.utente = utente;
     }
 
-    // Copy the fields of another object given as an argument.
+    /**
+     * This method copies the information fields of another object of the same class.
+     *
+     * @param magazzino the object that contains the fields to be copied.
+     */
     public void copyFields(Magazzino magazzino) {
         this.nomeAttivita = magazzino.getNomeAttivita();
         this.indirizzo = magazzino.getIndirizzo();

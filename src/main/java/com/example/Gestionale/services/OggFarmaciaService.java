@@ -1,7 +1,6 @@
 package com.example.Gestionale.services;
 
 import com.example.Gestionale.entities.Magazzino;
-import com.example.Gestionale.entities.OggAbbigliamento;
 import com.example.Gestionale.entities.OggFarmacia;
 import com.example.Gestionale.repositories.MagazzinoRepository;
 import com.example.Gestionale.repositories.OggFarmaciaRepository;

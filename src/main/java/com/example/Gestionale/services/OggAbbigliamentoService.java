@@ -2,7 +2,6 @@ package com.example.Gestionale.services;
 
 import com.example.Gestionale.entities.Magazzino;
 import com.example.Gestionale.entities.OggAbbigliamento;
-import com.example.Gestionale.entities.Utente;
 import com.example.Gestionale.repositories.MagazzinoRepository;
 import com.example.Gestionale.repositories.OggAbbigliamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

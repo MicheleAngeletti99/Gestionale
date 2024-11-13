@@ -4,19 +4,20 @@ import jakarta.persistence.*;
 
 @MappedSuperclass
 public class Oggetto {
-
+    // id
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    // fields
+    // shared information fields
     private String nome;
     private Double prezzo;
     private Integer quantita;
     private String descrizione;
 
+    // no args constructor
     public Oggetto() {
     }
-
+    // all args constructor
     public Oggetto(Long id, String nome, Double prezzo, Integer quantita, String descrizione) {
         this.id = id;
         this.nome = nome;
@@ -24,6 +25,8 @@ public class Oggetto {
         this.quantita = quantita;
         this.descrizione = descrizione;
     }
+
+    // getters & setters
 
     public Double getPrezzo() {
         return prezzo;
@@ -61,7 +64,11 @@ public class Oggetto {
         this.nome = nome;
     }
 
-    // Copy the fields of another object given as an argument.
+    /**
+     * This method copies the information fields of another object of the same class.
+     *
+     * @param oggetto the object that contains the fields to be copied.
+     */
     public void copyFields(Oggetto oggetto) {
         this.nome = oggetto.getNome();
         this.prezzo = oggetto.getPrezzo();
