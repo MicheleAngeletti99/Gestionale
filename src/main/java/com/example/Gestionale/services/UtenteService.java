@@ -1,7 +1,9 @@
 package com.example.Gestionale.services;
 
+import com.example.Gestionale.entities.Magazzino;
 import com.example.Gestionale.entities.Utente;
 import com.example.Gestionale.repositories.UtenteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,11 +68,20 @@ public class UtenteService {
     }
 
     /**
-     * Deletes one record from utenti table given its id.
+     * Deletes a user and the associated warehouse from the database given the user's ID.
      *
      * @param id the id of the user to be deleted, must not be null.
+     * @return true if the user and the associated Magazzino were deleted, false if the user was not found.
      */
-    public void deleteById(Long id){
-        utenteRepository.deleteById(id);
+    @Transactional
+    public boolean delete(Long id){
+        Optional<Utente> utenteOptional = utenteRepository.findById(id);
+        if (utenteOptional.isPresent()){
+            utenteRepository.deleteMagazzinoByUtenteId(id);
+
+            utenteRepository.deleteUtenteById(id);
+            return true;
+        }
+        return false;
     }
 }

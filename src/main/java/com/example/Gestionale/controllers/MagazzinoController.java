@@ -71,7 +71,7 @@ public class MagazzinoController {
         return ResponseEntity.notFound().build();
     }
 
-    @Operation(summary = "Delete a warehouse by ID", description = "Deletes a Magazzino by its ID.")
+    @Operation(summary = "Delete a warehouse by ID", description = "Deletes a Magazzino by its ID and removes all related objects")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Warehouse deleted successfully."),
             @ApiResponse(responseCode = "404", description = "Warehouse not found.")

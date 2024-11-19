@@ -1,5 +1,6 @@
 package com.example.Gestionale.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class Magazzino {
     private List<OggPub> oggettiPub;
     @ManyToOne
     @JoinColumn(name = "id_utente")
+    @JsonIgnore
     private Utente utente;
 
     // no args constructor

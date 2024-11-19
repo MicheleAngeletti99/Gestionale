@@ -1,5 +1,6 @@
 package com.example.Gestionale.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,6 +17,7 @@ public class OggPub extends Oggetto{
     // relation fields
     @ManyToOne
     @JoinColumn(name = "id_magazzino")
+    @JsonIgnore
     private Magazzino magazzino;
 
     // no args constructor

@@ -4,6 +4,7 @@ import com.example.Gestionale.entities.Magazzino;
 import com.example.Gestionale.entities.Utente;
 import com.example.Gestionale.repositories.MagazzinoRepository;
 import com.example.Gestionale.repositories.UtenteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -70,14 +71,19 @@ public class MagazzinoService {
     }
 
     /**
-     * Deletes a Magazzino by its ID if it exists.
+     * Deletes a Magazzino and its related objects (OggFarmacia, OggPub, OggAbbigliamento) by its ID if it exists.
      * @param id the ID of the Magazzino to delete
-     * @return true if the Magazzino was deleted, false if not found
+     * @return true if the Magazzino and its related objects were deleted, false if not found
      */
+    @Transactional
     public boolean delete(Long id){
         Optional<Magazzino> magazzinoOptional = magazzinoRepository.findById(id);
         if (magazzinoOptional.isPresent()){
-            magazzinoRepository.deleteById(id);
+            magazzinoRepository.deleteOggFarmaciaByMagazzinoId(id);
+            magazzinoRepository.deleteOggPubByMagazzinoId(id);
+            magazzinoRepository.deleteOggAbbigliamentoByMagazzinoId(id);
+
+            magazzinoRepository.deleteMagazzinoById(id);
             return true;
         }
         return false;

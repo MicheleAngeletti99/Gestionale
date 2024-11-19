@@ -81,12 +81,16 @@ public class UtenteController {
         }
     }
 
-    @Operation(summary = "Deletes a user in utenti.", description = "When given an id, deletes the user with that id from the database.")
+    @Operation(summary = "Deletes a user and the associated warehouse.", description = "Deletes the user with the given ID from the database and removes the associated Magazzino.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "The user was deleted correctly.")
     })
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        boolean deleteUtente = utenteService.delete(id);
+        if (deleteUtente) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
