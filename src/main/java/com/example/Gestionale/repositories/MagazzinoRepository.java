@@ -12,18 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface MagazzinoRepository extends JpaRepository<Magazzino,Long> {
 
     @Modifying
-    @Query(value = "DELETE FROM ogg_farmacia WHERE id_magazzino = :magazzinoId", nativeQuery = true)
-    void deleteOggFarmaciaByMagazzinoId(@Param("magazzinoId") Long magazzinoId);
+    @Query(value = "DELETE FROM magazzini WHERE id_utente = :utenteId", nativeQuery = true)
+    void deleteMagazzinoByUtenteId(@Param("utenteId") Long utenteId);
 
-    @Modifying
-    @Query(value = "DELETE FROM ogg_pub WHERE id_magazzino = :magazzinoId", nativeQuery = true)
-    void deleteOggPubByMagazzinoId(@Param("magazzinoId") Long magazzinoId);
-
-    @Modifying
-    @Query(value = "DELETE FROM ogg_abbigliamento WHERE id_magazzino = :magazzinoId", nativeQuery = true)
-    void deleteOggAbbigliamentoByMagazzinoId(@Param("magazzinoId") Long magazzinoId);
-
-    @Modifying
-    @Query(value = "DELETE FROM magazzini WHERE id = :magazzinoId", nativeQuery = true)
-    void deleteMagazzinoById(@Param("magazzinoId") Long magazzinoId);
 }

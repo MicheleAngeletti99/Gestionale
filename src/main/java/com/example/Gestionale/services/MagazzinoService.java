@@ -2,8 +2,7 @@ package com.example.Gestionale.services;
 
 import com.example.Gestionale.entities.Magazzino;
 import com.example.Gestionale.entities.Utente;
-import com.example.Gestionale.repositories.MagazzinoRepository;
-import com.example.Gestionale.repositories.UtenteRepository;
+import com.example.Gestionale.repositories.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,15 @@ public class MagazzinoService {
 
     @Autowired
     private MagazzinoRepository magazzinoRepository;
+
+    @Autowired
+    private OggAbbigliamentoRepository oggAbbigliamentoRepository;
+
+    @Autowired
+    private OggFarmaciaRepository oggFarmaciaRepository;
+
+    @Autowired
+    private OggPubRepository oggPubRepository;
 
     @Autowired
     private UtenteRepository utenteRepository;
@@ -79,11 +87,11 @@ public class MagazzinoService {
     public boolean delete(Long id){
         Optional<Magazzino> magazzinoOptional = magazzinoRepository.findById(id);
         if (magazzinoOptional.isPresent()){
-            magazzinoRepository.deleteOggFarmaciaByMagazzinoId(id);
-            magazzinoRepository.deleteOggPubByMagazzinoId(id);
-            magazzinoRepository.deleteOggAbbigliamentoByMagazzinoId(id);
+            oggFarmaciaRepository.deleteOggFarmaciaByMagazzinoId(id);
+            oggPubRepository.deleteOggPubByMagazzinoId(id);
+            oggAbbigliamentoRepository.deleteOggAbbigliamentoByMagazzinoId(id);
 
-            magazzinoRepository.deleteMagazzinoById(id);
+            magazzinoRepository.deleteById(id);
             return true;
         }
         return false;

@@ -1,7 +1,7 @@
 package com.example.Gestionale.services;
 
-import com.example.Gestionale.entities.Magazzino;
 import com.example.Gestionale.entities.Utente;
+import com.example.Gestionale.repositories.MagazzinoRepository;
 import com.example.Gestionale.repositories.UtenteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,9 @@ public class UtenteService {
     // fields
     @Autowired
     private UtenteRepository utenteRepository;
+
+    @Autowired
+    private MagazzinoRepository magazzinoRepository;
 
     // crud methods
 
@@ -77,9 +80,9 @@ public class UtenteService {
     public boolean delete(Long id){
         Optional<Utente> utenteOptional = utenteRepository.findById(id);
         if (utenteOptional.isPresent()){
-            utenteRepository.deleteMagazzinoByUtenteId(id);
+            magazzinoRepository.deleteMagazzinoByUtenteId(id);
 
-            utenteRepository.deleteUtenteById(id);
+            utenteRepository.deleteById(id);
             return true;
         }
         return false;
