@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Table(name = "ogg_farmacia")
 public class OggFarmacia extends Oggetto{
     // information fields
-    private boolean conRicetta;
+    private Boolean conRicetta;
     private LocalDate scadenza;
     private String codiceIdentificativo;
     // relation fields
@@ -24,7 +24,7 @@ public class OggFarmacia extends Oggetto{
     }
     // all args constructor
     public OggFarmacia(Long id, String nome, Double prezzo, Integer quantita, String descrizione,
-                       boolean conRicetta, LocalDate scadenza, String codiceIdentificativo, Magazzino magazzino) {
+                       Boolean conRicetta, LocalDate scadenza, String codiceIdentificativo, Magazzino magazzino) {
         super(id, nome, prezzo, quantita, descrizione);
         this.conRicetta = conRicetta;
         this.scadenza = scadenza;
@@ -34,11 +34,11 @@ public class OggFarmacia extends Oggetto{
 
     // getters & setters
 
-    public boolean isConRicetta() {
+    public Boolean isConRicetta() {
         return conRicetta;
     }
 
-    public void setConRicetta(boolean conRicetta) {
+    public void setConRicetta(Boolean conRicetta) {
         this.conRicetta = conRicetta;
     }
 
@@ -67,14 +67,14 @@ public class OggFarmacia extends Oggetto{
     }
 
     /**
-     * This method copies the information fields of another object of the same class.
+     * This method copies the information fields of another object of the same class, it copies only the fields that are not null.
      *
      * @param oggetto the object that contains the fields to be copied.
      */
     public void copyFieldsFarmacia(OggFarmacia oggetto) {
         super.copyFields(oggetto);
-        this.conRicetta = oggetto.isConRicetta();
-        this.scadenza = oggetto.getScadenza();
-        this.codiceIdentificativo = oggetto.getCodiceIdentificativo();
+        if (oggetto.isConRicetta() != null) this.conRicetta = oggetto.isConRicetta();
+        if (oggetto.getScadenza() != null) this.scadenza = oggetto.getScadenza();
+        if (oggetto.getCodiceIdentificativo() != null) this.codiceIdentificativo = oggetto.getCodiceIdentificativo();
     }
 }

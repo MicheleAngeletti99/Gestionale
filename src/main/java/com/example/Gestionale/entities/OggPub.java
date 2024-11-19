@@ -57,13 +57,13 @@ public class OggPub extends Oggetto{
     }
 
     /**
-     * This method copies the information fields of another object of the same class.
+     * This method copies the information fields of another object of the same class, it copies only the fields that are not null.
      *
      * @param oggetto the object that contains the fields to be copied.
      */
     public void copyFieldsPub(OggPub oggetto) {
         super.copyFields(oggetto);
-        this.scadenza = oggetto.getScadenza();
-        this.tipologia = oggetto.getTipologia();
+        if (oggetto.getScadenza() != null) this.scadenza = oggetto.getScadenza();
+        if (oggetto.getTipologia() != null) this.tipologia = oggetto.getTipologia();
     }
 }

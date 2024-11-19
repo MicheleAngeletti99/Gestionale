@@ -65,14 +65,14 @@ public class Oggetto {
     }
 
     /**
-     * This method copies the information fields of another object of the same class.
+     * This method copies the information fields of another object of the same class, it copies only the fields that are not null.
      *
      * @param oggetto the object that contains the fields to be copied.
      */
     public void copyFields(Oggetto oggetto) {
-        this.nome = oggetto.getNome();
-        this.prezzo = oggetto.getPrezzo();
-        this.quantita = oggetto.getQuantita();
-        this.descrizione = oggetto.getDescrizione();
+        if (oggetto.getNome() != null) this.nome = oggetto.getNome();
+        if (oggetto.getPrezzo() != null) this.prezzo = oggetto.getPrezzo();
+        if (oggetto.getQuantita() != null) this.quantita = oggetto.getQuantita();
+        if (oggetto.getDescrizione() != null) this.descrizione = oggetto.getDescrizione();
     }
 }

@@ -105,13 +105,13 @@ public class Magazzino {
     }
 
     /**
-     * This method copies the information fields of another object of the same class.
+     * This method copies the information fields of another object of the same class, it copies only the fields that are not null.
      *
      * @param magazzino the object that contains the fields to be copied.
      */
     public void copyFields(Magazzino magazzino) {
-        this.nomeAttivita = magazzino.getNomeAttivita();
-        this.indirizzo = magazzino.getIndirizzo();
-        this.tipologiaAttivita = magazzino.getTipologiaAttivita();
+        if (magazzino.getNomeAttivita() != null) this.nomeAttivita = magazzino.getNomeAttivita();
+        if (magazzino.getIndirizzo() != null) this.indirizzo = magazzino.getIndirizzo();
+        if (magazzino.getTipologiaAttivita() != null) this.tipologiaAttivita = magazzino.getTipologiaAttivita();
     }
 }

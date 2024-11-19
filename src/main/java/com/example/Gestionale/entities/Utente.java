@@ -60,12 +60,12 @@ public class Utente {
     }
 
     /**
-     * This method copies the information fields of another object of the same class.
+     * This method copies the information fields of another object of the same class, it copies only the fields that are not null.
      *
      * @param utente the object that contains the fields to be copied.
      */
     public void copyFields(Utente utente) {
-        this.email = utente.getEmail();
-        this.password = utente.getPassword();
+        if (utente.getEmail() != null) this.email = utente.getEmail();
+        if (utente.getPassword() != null) this.password = utente.getPassword();
     }
 }
