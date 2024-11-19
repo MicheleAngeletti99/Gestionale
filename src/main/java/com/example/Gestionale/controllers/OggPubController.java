@@ -90,7 +90,28 @@ public class OggPubController {
             @ApiResponse(responseCode = "204", description = "The item was deleted correctly.")
     })
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@Parameter(name = "id", description = "The id of the item to be deleted") @PathVariable Long id) {
         return ResponseEntity.noContent().build();
+    }
+
+    // other methods
+
+    @Operation(summary = "Increases the amount of an item in ogg_pub.", description = "When given an id and a number," +
+            " increases the amount of the item with that id in the database by the amount given by the number, decreases if the number is negative.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "The item was updated correctly."),
+            @ApiResponse(responseCode = "400", description = "The given number is not valid for this request."),
+            @ApiResponse(responseCode = "404", description = "The id was not found in the database.")
+    })
+    @PutMapping("/{id}/restock/")
+    public ResponseEntity<OggPub> restock(
+            @Parameter(name = "id", description = "The id of the item to be updated") @PathVariable Long id,
+            @Parameter(name = "amount", description = "The amount of the increase, decrease if negative") @RequestParam(value = "num") Integer amount) {
+        Optional<OggPub> optionalOgg = oggPubService.restock(id, amount);
+        if (optionalOgg.isPresent()) {
+            return ResponseEntity.ok().body(optionalOgg.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

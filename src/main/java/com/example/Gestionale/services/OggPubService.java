@@ -85,4 +85,26 @@ public class OggPubService {
     public void deleteById(Long id){
         oggPubRepository.deleteById(id);
     }
+
+    // other methods
+
+    /**
+     * Increases the amount of an item in ogg_pub table by the given number, decreases if the number is negative.
+     *
+     * @param id the id of the item to be modified, must not be null.
+     * @param amount the increase in amount, decrease if negative.
+     * @return an Optional with the updated item, an empty Optional if the id is not found.
+     */
+    public Optional<OggPub> restock(Long id, Integer amount) {
+        Optional<OggPub> optionalOgg = oggPubRepository.findById(id);
+        if (optionalOgg.isPresent()) {
+            OggPub updateOgg = optionalOgg.get();
+
+            updateOgg.increase(amount);
+
+            return Optional.of(oggPubRepository.save(updateOgg));
+        } else {
+            return Optional.empty();
+        }
+    }
 }

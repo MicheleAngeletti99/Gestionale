@@ -75,4 +75,13 @@ public class Oggetto {
         if (oggetto.getQuantita() != null) this.quantita = oggetto.getQuantita();
         if (oggetto.getDescrizione() != null) this.descrizione = oggetto.getDescrizione();
     }
+
+    /**
+     * Increases the amount of an item by the given number, decreases if the number is negative.
+     *
+     * @param number the increase.
+     */
+    public void increase(Integer number){
+        if (number != null) this.quantita += number;
+    }
 }

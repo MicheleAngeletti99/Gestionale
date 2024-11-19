@@ -85,4 +85,26 @@ public class OggFarmaciaService {
     public void deleteById(Long id){
         oggFarmaciaRepository.deleteById(id);
     }
+
+    // other methods
+
+    /**
+     * Increases the amount of an item in ogg_farmacia by the given number, decreases if the number is negative.
+     *
+     * @param id the id of the item to be modified, must not be null.
+     * @param amount the increase in amount, decrease if negative.
+     * @return an Optional with the updated item, an empty Optional if the id is not found.
+     */
+    public Optional<OggFarmacia> restock(Long id, Integer amount) {
+        Optional<OggFarmacia> optionalOgg = oggFarmaciaRepository.findById(id);
+        if (optionalOgg.isPresent()) {
+            OggFarmacia updateOgg = optionalOgg.get();
+
+            updateOgg.increase(amount);
+
+            return Optional.of(oggFarmaciaRepository.save(updateOgg));
+        } else {
+            return Optional.empty();
+        }
+    }
 }

@@ -85,4 +85,26 @@ public class OggAbbigliamentoService {
     public void deleteById(Long id){
         oggAbbigliamentoRepository.deleteById(id);
     }
+
+    // other methods
+
+    /**
+     * Increases the amount of an item in ogg_abbigliamento table by the given number, decreases if the number is negative.
+     *
+     * @param id the id of the item to be modified, must not be null.
+     * @param amount the increase in amount, decrease if negative.
+     * @return an Optional with the updated item, an empty Optional if the id is not found.
+     */
+    public Optional<OggAbbigliamento> restock(Long id, Integer amount) {
+        Optional<OggAbbigliamento> optionalOgg = oggAbbigliamentoRepository.findById(id);
+        if (optionalOgg.isPresent()) {
+            OggAbbigliamento updateOgg = optionalOgg.get();
+
+            updateOgg.increase(amount);
+
+            return Optional.of(oggAbbigliamentoRepository.save(updateOgg));
+        } else {
+            return Optional.empty();
+        }
+    }
 }
