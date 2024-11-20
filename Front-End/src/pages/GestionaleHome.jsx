@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Title3xl } from "../components/Title3xl";
 import { Button } from "../components/Button";
+import { TitleXL } from "../components/TitleXL";
+import { LinkPage } from "../components/LinkPage";
+import { Input } from "../components/Input";
 
 export function GestionaleHome() {
   const [products, setProducts] = useState();
@@ -60,10 +63,70 @@ export function GestionaleHome() {
 
   return (
     <>
-      <section>
-        <Title3xl text="Gestionale Home" />
-        <section>
-          <h2>Prodotti in Sede</h2>
+      <Title3xl text="Gestionale Home" />
+      <section className="flex gap-1 ">
+        {/* SideBar */}
+        <section className="p-6 bg-slate-400">
+          <LinkPage text="Warehouse" />
+          <LinkPage text="Warehouse settings" />
+          <LinkPage text="Tools View" />
+          <LinkPage text="Warehouse" />
+        </section>
+        {/* Inserimento Attività */}
+        <section className="p-6">
+          {/* mini nav */}
+          <section className="flex gap-3">
+            <p>Tasti gestione prodotti e visualizzazioni --></p>
+            <p>all</p>
+            <p>all</p>
+            <p>all</p>
+            <p>all</p>
+            <p>all</p>
+            <p>all</p>
+            <p>all</p>
+            <p>all</p>
+            <p>all</p>
+          </section>
+          <form
+            onChange={(e) => {
+              const { name, value } = e.target;
+              setForm((form) => ({
+                ...form,
+                [name]: value,
+              }));
+            }}
+          >
+            <TitleXL text="Inserisci Magazzino" />
+            <label>
+              <h3>Nome Attività</h3>
+              <input
+                type="text"
+                placeholder="Nome Attività"
+                className="bg-red-50 border border-red-500"
+                name="nomeAttivita"
+              />
+            </label>
+            <label>
+              <h3>Indirizzo Attività</h3>
+              <input
+                type="text"
+                placeholder="Indirizzo"
+                className="bg-red-50 border border-red-500"
+                name="indirizzo"
+              />
+            </label>
+            <label>
+              <h3>Tipologia Attivita</h3>
+              <input
+                type="text"
+                placeholder="Tipologia Attivita"
+                className="bg-red-50 border border-red-500"
+                name="tipologiaAttivita"
+              />
+            </label>
+            <Input name="prova" placeholder="prova1" />
+            <Button style="error" text="Save" onClick={handleCreateWarehouse} />
+          </form>
           {/* <Card /> */}
           {/* {error ? (
             <h3>There is an error, sorry we resolve all</h3>
@@ -80,28 +143,8 @@ export function GestionaleHome() {
               ))}
             </ul>
           )} */}
-          <p>{products[0].nomeAttivita}</p>
-          <p>{products[1].nomeAttivita}</p>
-          <form
-            onChange={(e) => {
-              const { name, value } = e.target;
-              setForm((form) => ({
-                ...form,
-                [name]: value,
-              }));
-            }}
-          >
-            <label>
-              <h3>Nome Attività</h3>
-              <input
-                type="text"
-                placeholder="Nome Attività"
-                className="bg-red-50 border border-red-500"
-                name="nomeAttivita"
-              />
-            </label>
-            <Button style="error" text="Save" onClick={handleCreateWarehouse} />
-          </form>
+          {/* <p>{products[0].nomeAttivita}</p>
+          <p>{products[1].nomeAttivita}</p> */}
         </section>
       </section>
     </>

@@ -43,7 +43,7 @@ export function Navbar() {
           onMouseLeave={() => setHoverProducts(false)}
           text="Products"
         />
-        {setHoverProducts && (
+        {hoverProducts && (
           <ul className="absolute top-20 bg-white z-10 w-32 p-2 flex flex-col">
             <li>Warehouse</li>
             <li>Pub/Restaurant</li>
