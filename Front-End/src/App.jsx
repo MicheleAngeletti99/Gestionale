@@ -16,7 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
 
         {/* Gestionale Magazzino */}
-        <Route path="/gestionale_magazzino" element={<GestionaleHome />} />
+        <Route path="/gestionale_warehouse" element={<GestionaleHome />} />
       </Routes>
     </Container>
   );

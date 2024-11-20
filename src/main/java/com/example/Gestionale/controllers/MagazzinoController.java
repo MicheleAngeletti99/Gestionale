@@ -28,6 +28,7 @@ public class MagazzinoController {
     @ApiResponse(responseCode = "200", description = "List of warehouses retrieved successfully.")
     @GetMapping("/all")
     public ResponseEntity<List<Magazzino>> listaMagazzini(){
+        System.out.println("Request successful");
         return ResponseEntity.ok(magazzinoService.readAll());
     }
 

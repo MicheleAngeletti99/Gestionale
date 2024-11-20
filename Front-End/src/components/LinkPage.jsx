@@ -1,11 +1,11 @@
-export function LinkPage({ onClick, text, onMouseEnter, onMouseLeave }) {
+export function LinkPage({ onClick, text, style = "primary" }) {
+  const styleText = {
+    primary: "text-3xl",
+    secondary: "auto",
+  };
+
   return (
-    <div
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      className="text-3xl cursor-pointer"
-    >
+    <div onClick={onClick} className={`cursor-pointer ${styleText[style]}`}>
       {text}
     </div>
   );
