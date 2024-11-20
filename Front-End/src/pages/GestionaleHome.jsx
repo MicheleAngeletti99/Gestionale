@@ -4,6 +4,7 @@ import { Button } from "../components/Button";
 import { TitleXL } from "../components/TitleXL";
 import { LinkPage } from "../components/LinkPage";
 import { Input } from "../components/Input";
+import { IoIosAdd } from "react-icons/io";
 
 export function GestionaleHome() {
   const [products, setProducts] = useState();
@@ -76,16 +77,7 @@ export function GestionaleHome() {
         <section className="p-6">
           {/* mini nav */}
           <section className="flex gap-3">
-            <p>Tasti gestione prodotti e visualizzazioni --></p>
-            <p>all</p>
-            <p>all</p>
-            <p>all</p>
-            <p>all</p>
-            <p>all</p>
-            <p>all</p>
-            <p>all</p>
-            <p>all</p>
-            <p>all</p>
+            <Button icon={<IoIosAdd />} style="secondary" />
           </section>
           <form
             onChange={(e) => {
@@ -95,37 +87,34 @@ export function GestionaleHome() {
                 [name]: value,
               }));
             }}
+            className="flex flex-col"
           >
             <TitleXL text="Inserisci Magazzino" />
-            <label>
-              <h3>Nome Attività</h3>
-              <input
-                type="text"
-                placeholder="Nome Attività"
-                className="bg-red-50 border border-red-500"
-                name="nomeAttivita"
-              />
-            </label>
-            <label>
-              <h3>Indirizzo Attività</h3>
-              <input
-                type="text"
-                placeholder="Indirizzo"
-                className="bg-red-50 border border-red-500"
-                name="indirizzo"
-              />
-            </label>
-            <label>
-              <h3>Tipologia Attivita</h3>
-              <input
-                type="text"
-                placeholder="Tipologia Attivita"
-                className="bg-red-50 border border-red-500"
-                name="tipologiaAttivita"
-              />
-            </label>
-            <Input name="prova" placeholder="prova1" />
-            <Button style="error" text="Save" onClick={handleCreateWarehouse} />
+            <Input
+              type="text"
+              placeholder="Nome Attività"
+              name="nomeAttivita"
+              text="Nome Attività"
+            />
+            <Input
+              type="text"
+              placeholder="Indirizzo"
+              name="indirizzo"
+              text="Indirizzo Attività"
+            />
+            <Input
+              type="text"
+              placeholder="Tipologia Attività"
+              name="tipologiaAttivita"
+              text="Tipologia Attività"
+            />
+
+            <Button
+              style="error"
+              text="Save Warehouse"
+              size="sm"
+              onClick={handleCreateWarehouse}
+            />
           </form>
           {/* <Card /> */}
           {/* {error ? (
