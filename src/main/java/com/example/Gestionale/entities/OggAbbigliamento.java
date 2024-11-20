@@ -1,5 +1,6 @@
 package com.example.Gestionale.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -8,12 +9,14 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "ogg_abbigliamento")
 public class OggAbbigliamento extends Oggetto{
-    // fields
+    // information fields
     private String marca;
     private String taglia;
     private String tipologia;
+    // relation fields
     @ManyToOne
     @JoinColumn(name = "id_magazzino")
+    @JsonIgnore
     private Magazzino magazzino;
 
     // no args constructor
@@ -64,14 +67,14 @@ public class OggAbbigliamento extends Oggetto{
     }
 
     /**
-     * This method copies the fields of another object of the same class, except id.
+     * This method copies the information fields of another object of the same class, it copies only the fields that are not null.
      *
      * @param oggetto the object that contains the fields to be copied.
      */
     public void copyFieldsAbbigliamento(OggAbbigliamento oggetto) {
         super.copyFields(oggetto);
-        this.marca = oggetto.getMarca();
-        this.taglia = oggetto.getTaglia();
-        this.tipologia = oggetto.getTipologia();
+        if (oggetto.getMarca() != null) this.marca = oggetto.getMarca();
+        if (oggetto.getTaglia() != null) this.taglia = oggetto.getTaglia();
+        if (oggetto.getTipologia() != null) this.tipologia = oggetto.getTipologia();
     }
 }

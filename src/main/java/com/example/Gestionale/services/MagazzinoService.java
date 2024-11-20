@@ -1,7 +1,9 @@
 package com.example.Gestionale.services;
 
 import com.example.Gestionale.entities.Magazzino;
-import com.example.Gestionale.repositories.MagazzinoRepository;
+import com.example.Gestionale.entities.Utente;
+import com.example.Gestionale.repositories.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,6 +14,18 @@ public class MagazzinoService {
 
     @Autowired
     private MagazzinoRepository magazzinoRepository;
+
+    @Autowired
+    private OggAbbigliamentoRepository oggAbbigliamentoRepository;
+
+    @Autowired
+    private OggFarmaciaRepository oggFarmaciaRepository;
+
+    @Autowired
+    private OggPubRepository oggPubRepository;
+
+    @Autowired
+    private UtenteRepository utenteRepository;
 
     /**
      * Retrieves a list of all Magazzino entries from the repository.
@@ -33,10 +47,18 @@ public class MagazzinoService {
     /**
      * Creates a new Magazzino entry in the repository.
      * @param magazzino the Magazzino object to save
+     * @param idUtente the ID of Utente to associate with the Magazzino.
      * @return the created Magazzino object
      */
-    public Magazzino create(Magazzino magazzino){
-        return magazzinoRepository.save(magazzino);
+    public Optional<Magazzino> create(Long idUtente, Magazzino magazzino){
+        Optional<Utente> optionalUtente = utenteRepository.findById(idUtente);
+        if (optionalUtente.isPresent()){
+            Utente utente = optionalUtente.get();
+            magazzino.setUtente(utente);
+            Magazzino savedMagazzino = magazzinoRepository.save(magazzino);
+            return Optional.of(savedMagazzino);
+        }
+        return Optional.empty();
     }
 
     /**
@@ -57,13 +79,18 @@ public class MagazzinoService {
     }
 
     /**
-     * Deletes a Magazzino by its ID if it exists.
+     * Deletes a Magazzino and its related objects (OggFarmacia, OggPub, OggAbbigliamento) by its ID if it exists.
      * @param id the ID of the Magazzino to delete
-     * @return true if the Magazzino was deleted, false if not found
+     * @return true if the Magazzino and its related objects were deleted, false if not found
      */
+    @Transactional
     public boolean delete(Long id){
         Optional<Magazzino> magazzinoOptional = magazzinoRepository.findById(id);
         if (magazzinoOptional.isPresent()){
+            oggFarmaciaRepository.deleteOggFarmaciaByMagazzinoId(id);
+            oggPubRepository.deleteOggPubByMagazzinoId(id);
+            oggAbbigliamentoRepository.deleteOggAbbigliamentoByMagazzinoId(id);
+
             magazzinoRepository.deleteById(id);
             return true;
         }

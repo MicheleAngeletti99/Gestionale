@@ -1,6 +1,8 @@
 package com.example.Gestionale.services;
 
+import com.example.Gestionale.entities.Magazzino;
 import com.example.Gestionale.entities.OggAbbigliamento;
+import com.example.Gestionale.repositories.MagazzinoRepository;
 import com.example.Gestionale.repositories.OggAbbigliamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ public class OggAbbigliamentoService {
     // fields
     @Autowired
     private OggAbbigliamentoRepository oggAbbigliamentoRepository;
+    @Autowired
+    private MagazzinoRepository magazzinoRepository;
 
     // crud methods
 
@@ -20,10 +24,18 @@ public class OggAbbigliamentoService {
      * Creates a new record in ogg_abbigliamento table.
      *
      * @param oggetto the item to be saved, must not be null.
+     * @param idMagazzino ID of the Magazzino to associate with the OggettoAbbigliamento.
      * @return the saved item, will not be null.
      */
-    public OggAbbigliamento create(OggAbbigliamento oggetto) {
-        return oggAbbigliamentoRepository.save(oggetto);
+    public Optional<OggAbbigliamento> create(OggAbbigliamento oggetto, Long idMagazzino) {
+            Optional<Magazzino> optionalMagazzino = magazzinoRepository.findById(idMagazzino);
+            if (optionalMagazzino.isPresent()) {
+                Magazzino magazzino = optionalMagazzino.get();
+                oggetto.setMagazzino(magazzino);
+                OggAbbigliamento savedOggAbbigliamento = oggAbbigliamentoRepository.save(oggetto);
+                return Optional.of(savedOggAbbigliamento);
+            }
+            return Optional.empty();
     }
 
     /**
@@ -72,5 +84,27 @@ public class OggAbbigliamentoService {
      */
     public void deleteById(Long id){
         oggAbbigliamentoRepository.deleteById(id);
+    }
+
+    // other methods
+
+    /**
+     * Increases the amount of an item in ogg_abbigliamento table by the given number, decreases if the number is negative.
+     *
+     * @param id the id of the item to be modified, must not be null.
+     * @param amount the increase in amount, decrease if negative.
+     * @return an Optional with the updated item, an empty Optional if the id is not found.
+     */
+    public Optional<OggAbbigliamento> restock(Long id, Integer amount) {
+        Optional<OggAbbigliamento> optionalOgg = oggAbbigliamentoRepository.findById(id);
+        if (optionalOgg.isPresent()) {
+            OggAbbigliamento updateOgg = optionalOgg.get();
+
+            updateOgg.increase(amount);
+
+            return Optional.of(oggAbbigliamentoRepository.save(updateOgg));
+        } else {
+            return Optional.empty();
+        }
     }
 }

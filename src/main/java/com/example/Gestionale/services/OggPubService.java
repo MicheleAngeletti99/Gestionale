@@ -1,6 +1,8 @@
 package com.example.Gestionale.services;
 
+import com.example.Gestionale.entities.Magazzino;
 import com.example.Gestionale.entities.OggPub;
+import com.example.Gestionale.repositories.MagazzinoRepository;
 import com.example.Gestionale.repositories.OggPubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ public class OggPubService {
     // fields
     @Autowired
     private OggPubRepository oggPubRepository;
+    @Autowired
+    private MagazzinoRepository magazzinoRepository;
 
     // crud methods
 
@@ -20,10 +24,18 @@ public class OggPubService {
      * Creates a new record in ogg_pub table.
      *
      * @param oggetto the item to be saved, must not be null.
+     * @param idMagazzino ID of the Magazzino to associate with the OggettoPub.
      * @return the saved item, will not be null.
      */
-    public OggPub create(OggPub oggetto) {
-        return oggPubRepository.save(oggetto);
+    public Optional<OggPub> create(OggPub oggetto, Long idMagazzino) {
+        Optional<Magazzino> optionalMagazzino = magazzinoRepository.findById(idMagazzino);
+        if (optionalMagazzino.isPresent()) {
+            Magazzino magazzino = optionalMagazzino.get();
+            oggetto.setMagazzino(magazzino);
+            OggPub savedOggPub = oggPubRepository.save(oggetto);
+            return Optional.of(savedOggPub);
+        }
+        return Optional.empty();
     }
 
     /**
@@ -72,5 +84,27 @@ public class OggPubService {
      */
     public void deleteById(Long id){
         oggPubRepository.deleteById(id);
+    }
+
+    // other methods
+
+    /**
+     * Increases the amount of an item in ogg_pub table by the given number, decreases if the number is negative.
+     *
+     * @param id the id of the item to be modified, must not be null.
+     * @param amount the increase in amount, decrease if negative.
+     * @return an Optional with the updated item, an empty Optional if the id is not found.
+     */
+    public Optional<OggPub> restock(Long id, Integer amount) {
+        Optional<OggPub> optionalOgg = oggPubRepository.findById(id);
+        if (optionalOgg.isPresent()) {
+            OggPub updateOgg = optionalOgg.get();
+
+            updateOgg.increase(amount);
+
+            return Optional.of(oggPubRepository.save(updateOgg));
+        } else {
+            return Optional.empty();
+        }
     }
 }

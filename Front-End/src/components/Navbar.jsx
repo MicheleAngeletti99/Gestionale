@@ -31,42 +31,25 @@ export function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 z-10 w-screen h-20 border-b-2 border-solid border-gray-300 px-3 bg-white flex flex-row items-center justify-between ">
+    <nav className="w-full h-20 border-b-2 border-solid border-gray-300 p-2 flex flex-row items-center justify-between ">
       <section className="flex flex-row items-center gap-3">
         <ImgLogo src={src} alt="Home Page" onClick={handleHome} />
         <TitleXL text="StockHub" />
       </section>
-      <section className="h-full flex flex-row items-center justify-center gap-3 cursor-pointer">
-        <section
-          className="h-full flex items-center justify-center"
+      <section className="flex flex-row items-center gap-3">
+        <LinkPage
+          onClick={handleWarehouseHome}
           onMouseEnter={() => setHoverProducts(true)}
           onMouseLeave={() => setHoverProducts(false)}
-        >
-          <Title3xl text="Products" cursorPointer="disable" height="auto" />
-          {hoverProducts && (
-            <ul
-              onMouseEnter={() => setHoverProducts(true)}
-              onMouseLeave={() => setHoverProducts(false)}
-              className="fixed top-20 bg-white w-32 p-2 flex flex-col"
-            >
-              <LinkPage
-                onClick={() => handleWarehouseHome()}
-                text="Warehouse"
-                style="secondary"
-              />
-              <LinkPage
-                onClick={handlePubRestaurantHome}
-                text="Pub/Restaurant"
-                style="secondary"
-              />
-              <LinkPage
-                onClick={handlePharmacyHome}
-                text="Pharmacy"
-                style="secondary"
-              />
-            </ul>
-          )}
-        </section>
+          text="Products"
+        />
+        {setHoverProducts && (
+          <ul className="absolute top-20 bg-white z-10 w-32 p-2 flex flex-col">
+            <li>Warehouse</li>
+            <li>Pub/Restaurant</li>
+            <li>Pharmacy</li>
+          </ul>
+        )}
         <LinkPage onClick={handleGetStarted} text="Solutions" />
         <LinkPage onClick={handleGetStarted} text="Resources" />
         <LinkPage onClick={handleGetStarted} text="Price" />

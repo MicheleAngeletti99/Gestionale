@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,10 +48,13 @@ public class MagazzinoController {
 
     @Operation(summary = "Create a new warehouse", description = "Creates a new Magazzino entry and returns it.")
     @ApiResponse(responseCode = "201", description = "Warehouse created successfully.")
-    @PostMapping("/create")
-    public ResponseEntity<Magazzino> newMagazzino(@RequestBody Magazzino magazzino){
-        Magazzino nuovoMagazzino = magazzinoService.create(magazzino);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuovoMagazzino);
+    @PostMapping("/create/{idUtente}")
+    public ResponseEntity<Magazzino> create(@RequestBody Magazzino magazzino, @PathVariable Long idUtente){
+        Optional<Magazzino> optionalMagazzino = magazzinoService.create(idUtente, magazzino);
+        if (optionalMagazzino.isPresent()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(optionalMagazzino.get());
+        }
+        return ResponseEntity.notFound().build();
     }
 
 
@@ -70,7 +72,7 @@ public class MagazzinoController {
         return ResponseEntity.notFound().build();
     }
 
-    @Operation(summary = "Delete a warehouse by ID", description = "Deletes a Magazzino by its ID.")
+    @Operation(summary = "Delete a warehouse by ID", description = "Deletes a Magazzino by its ID and removes all related objects")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Warehouse deleted successfully."),
             @ApiResponse(responseCode = "404", description = "Warehouse not found.")

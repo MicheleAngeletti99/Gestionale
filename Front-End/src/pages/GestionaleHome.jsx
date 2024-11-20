@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { TitleXL } from "../components/TitleXL";
 import { Title3xl } from "../components/Title3xl";
 import { Button } from "../components/Button";
 
