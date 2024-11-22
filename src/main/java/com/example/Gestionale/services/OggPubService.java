@@ -7,6 +7,7 @@ import com.example.Gestionale.repositories.OggPubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +85,25 @@ public class OggPubService {
      */
     public void deleteById(Long id){
         oggPubRepository.deleteById(id);
+    }
+
+    // search methods
+
+    /**
+     * Searches items in ogg_pub table corresponding to the given fields.
+     *
+     * @param nome a String contained in the name to be searched.
+     * @param prezzo the max price to be searched.
+     * @param quantita the min number of items in stock.
+     * @param descrizione a String contained in the description to be searched.
+     * @param scadenza the earliest expiring date to be searched.
+     * @param tipologia the exact type to be searched.
+     * @return a List with the found items.
+     */
+    public List<OggPub> findByFields(String nome, Double prezzo, Integer quantita, String descrizione,
+                                     LocalDate scadenza, String tipologia) {
+        List<OggPub> items = oggPubRepository.findByFields(nome, prezzo, quantita, descrizione, scadenza, tipologia);
+        return items;
     }
 
     // other methods

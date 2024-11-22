@@ -7,6 +7,7 @@ import com.example.Gestionale.repositories.OggFarmaciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +85,26 @@ public class OggFarmaciaService {
      */
     public void deleteById(Long id){
         oggFarmaciaRepository.deleteById(id);
+    }
+
+    // search methods
+
+    /**
+     * Searches items in ogg_farmacia table corresponding to the given fields.
+     *
+     * @param nome a String contained in the name to be searched.
+     * @param prezzo the max price to be searched.
+     * @param quantita the min number of items in stock.
+     * @param descrizione a String contained in the description to be searched.
+     * @param conRicetta if the item requires a recipe or not.
+     * @param scadenza the earliest expiring date to be searched.
+     * @param codiceIdentificativo the exact code to be searched.
+     * @return a List with the found items.
+     */
+    public List<OggFarmacia> findByFields(String nome, Double prezzo, Integer quantita, String descrizione,
+                                          Boolean conRicetta, LocalDate scadenza, String codiceIdentificativo) {
+        List<OggFarmacia> items = oggFarmaciaRepository.findByFields(nome, prezzo, quantita, descrizione, conRicetta, scadenza, codiceIdentificativo);
+        return items;
     }
 
     // other methods

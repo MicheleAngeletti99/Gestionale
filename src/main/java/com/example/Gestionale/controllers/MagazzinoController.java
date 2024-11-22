@@ -3,6 +3,7 @@ package com.example.Gestionale.controllers;
 import com.example.Gestionale.entities.Magazzino;
 import com.example.Gestionale.services.MagazzinoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -84,5 +85,25 @@ public class MagazzinoController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    // search methods
+
+    @Operation(summary = "Searches warehouses by fields.", description = "When given fields of a Magazzino, searches all the warehouses " +
+            "that have fields similar to the ones given.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Warehouses found successfully."),
+            @ApiResponse(responseCode = "204", description = "No warehouses found."),
+            @ApiResponse(responseCode = "400", description = "The given Magazzino is not valid for this request.")
+    })
+    @GetMapping("/search")
+    public ResponseEntity<List<Magazzino>> findByFields(
+            @Parameter(name = "nome", description = "A String contained in the name to be searched") @RequestParam(value = "nome", required = false) String nomeAttivita,
+            @Parameter(name = "indirizzo", description = "A String contained in the address to be searched") @RequestParam(value = "indirizzo", required = false) String indirizzo,
+            @Parameter(name = "tipo", description = "The exact type to be searched") @RequestParam(value = "tipo", required = false) String tipologiaAttivita
+    ) {
+        List<Magazzino> magazzini = magazzinoService.findByFields(nomeAttivita, indirizzo, tipologiaAttivita);
+        if (magazzini.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(magazzini);
     }
 }

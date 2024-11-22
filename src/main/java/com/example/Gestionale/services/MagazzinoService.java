@@ -96,4 +96,19 @@ public class MagazzinoService {
         }
         return false;
     }
+
+    // search methods
+
+    /**
+     * Searches warehouses corresponding to the given fields.
+     *
+     * @param nomeAttivita a String contained in the name to be searched.
+     * @param indirizzo a String contained in the address to be searched.
+     * @param tipologiaAttivita the exact type to be searched.
+     * @return a List with the found warehouses.
+     */
+    public List<Magazzino> findByFields(String nomeAttivita, String indirizzo, String tipologiaAttivita) {
+        List<Magazzino> magazzini = magazzinoRepository.findByFields(nomeAttivita, indirizzo, tipologiaAttivita);
+        return magazzini;
+    }
 }

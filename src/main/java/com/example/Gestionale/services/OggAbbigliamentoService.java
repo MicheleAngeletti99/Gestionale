@@ -107,4 +107,24 @@ public class OggAbbigliamentoService {
             return Optional.empty();
         }
     }
+
+    // search methods
+
+    /**
+     * Searches items in ogg_abbigliamento table corresponding to the given fields.
+     *
+     * @param nome a String contained in the name to be searched.
+     * @param prezzo the max price to be searched.
+     * @param quantita the min number of items in stock.
+     * @param descrizione a String contained in the description to be searched.
+     * @param marca a String contained in the brand to be searched.
+     * @param taglia the exact size to be searched.
+     * @param tipologia the exact type to be searched.
+     * @return a List with the found items.
+     */
+    public  List<OggAbbigliamento> findByFields(String nome, Double prezzo, Integer quantita, String descrizione,
+                                                String marca, String taglia, String tipologia){
+        List<OggAbbigliamento> items = oggAbbigliamentoRepository.findByFields(nome, prezzo, quantita, descrizione, marca, taglia, tipologia);
+        return items;
+    }
 }

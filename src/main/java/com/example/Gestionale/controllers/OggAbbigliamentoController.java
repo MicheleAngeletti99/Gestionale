@@ -94,6 +94,30 @@ public class OggAbbigliamentoController {
         return ResponseEntity.noContent().build();
     }
 
+    // search methods
+
+    @Operation(summary = "Searches items by fields.", description = "When given fields of an OggAbbigliamento, searches all the items " +
+            "that have fields similar to the ones given.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Items found successfully."),
+            @ApiResponse(responseCode = "204", description = "No items found."),
+            @ApiResponse(responseCode = "400", description = "The given item is not valid for this request.")
+    })
+    @GetMapping("/search")
+    public ResponseEntity<List<OggAbbigliamento>> findByFields(
+            @Parameter(name = "nome", description = "A String contained in the name to be searched") @RequestParam(value = "nome", required = false) String nome,
+            @Parameter(name = "prezzo", description = "The max price to be searched") @RequestParam(value = "prezzo", required = false) Double prezzo,
+            @Parameter(name = "quantita", description = "The min number of items in stock") @RequestParam(value = "quantita", required = false) Integer quantita,
+            @Parameter(name = "descrizione", description = "A String contained in the description to be searched") @RequestParam(value = "descrizione", required = false) String descrizione,
+            @Parameter(name = "marca", description = "A String contained in the brand to be searched") @RequestParam(value = "marca", required = false) String marca,
+            @Parameter(name = "taglia", description = "The exact size to be searched") @RequestParam(value = "taglia", required = false) String taglia,
+            @Parameter(name = "tipo", description = "The exact type to be searched") @RequestParam(value = "tipo", required = false) String tipologia
+    ) {
+        List<OggAbbigliamento> items = oggAbbigliamentoService.findByFields(nome, prezzo, quantita, descrizione, marca, taglia, tipologia);
+        if (items.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(items);
+    }
+
     // other methods
 
     @Operation(summary = "Increases the amount of an item in ogg_abbigliamento.", description = "When given an id and a number," +

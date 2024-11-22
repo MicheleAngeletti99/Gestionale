@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,6 +93,29 @@ public class OggPubController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteById(@Parameter(name = "id", description = "The id of the item to be deleted") @PathVariable Long id) {
         return ResponseEntity.noContent().build();
+    }
+
+    // search methods
+
+    @Operation(summary = "Searches items by fields.", description = "When given fields of an OggPub, searches all the items " +
+            "that have fields similar to the ones given.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Items found successfully."),
+            @ApiResponse(responseCode = "204", description = "No items found."),
+            @ApiResponse(responseCode = "400", description = "The given item is not valid for this request.")
+    })
+    @GetMapping("/search")
+    public ResponseEntity<List<OggPub>> findByFields(
+            @Parameter(name = "nome", description = "A String contained in the name to be searched") @RequestParam(value = "nome", required = false) String nome,
+            @Parameter(name = "prezzo", description = "The max price to be searched") @RequestParam(value = "prezzo", required = false) Double prezzo,
+            @Parameter(name = "quantita", description = "The min number of items in stock") @RequestParam(value = "quantita", required = false) Integer quantita,
+            @Parameter(name = "descrizione", description = "A String contained in the description to be searched") @RequestParam(value = "descrizione", required = false) String descrizione,
+            @Parameter(name = "scadenza", description = "The earliest expiring date to be searched") @RequestParam(value = "scadenza", required = false) LocalDate scadenza,
+            @Parameter(name = "tipo", description = "The exact type to be searched") @RequestParam(value = "tipo", required = false) String tipologia
+    ) {
+        List<OggPub> items = oggPubService.findByFields(nome, prezzo, quantita, descrizione, scadenza, tipologia);
+        if (items.isEmpty()) return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(items);
     }
 
     // other methods
